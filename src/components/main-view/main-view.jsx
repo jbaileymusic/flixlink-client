@@ -11,13 +11,13 @@ export const MainView = () => {
     fetch("https://flexlink-11694b6f8913.herokuapp.com")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
+        const moviesFromApi = movies.map((movie) => {
           return {
-            id: doc.key,
-            Title: doc.Title,
-            Description: doc.Description,
-            Genre: doc.Genre,
-            Director: doc.Director,
+            id: movie.key,
+            Title: movie.Title,
+            Description: movie.Description,
+            Genre: movie.Genre,
+            Director: movie.Director,
             /*             ImagePath: ``, */
           };
         });
