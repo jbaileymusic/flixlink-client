@@ -1,28 +1,40 @@
+import PropTypes from "prop-types";
+
 export const MovieView = ({ movie, onBackClick }) => {
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <img src={movie.image} />
-        </div>
-        <div>
-          <span>Title: </span>
-          <span>{movie.title}</span>
-        </div>
-        <div>
-          <span>Genre: </span>
-          <span>{movie.genre}</span>
-        </div>
-        <div>
-          <span>Director: </span>
-          <span>{movie.director}</span>
-        </div>
-        <div>
-          <span>Description: </span>
-          <span>{movie.description}</span>
-        </div>
-        <br></br>
-        <button onClick={onBackClick}>BACK</button>
+        <img src={movie.ImagePath} />
       </div>
-    );
-  };
-  
+      <div>
+        <span>Title: </span>
+        <span>{movie.Title}</span>
+      </div>
+      <div>
+        <span>Genre: </span>
+        <span>{movie.Genre}</span>
+      </div>
+      <div>
+        <span>Director: </span>
+        <span>{movie.Director}</span>
+      </div>
+      <div>
+        <span>Description: </span>
+        <span>{movie.Description}</span>
+      </div>
+      <br></br>
+      <button onClick={onBackClick}>BACK</button>
+    </div>
+  );
+};
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    Genre: PropTypes.string.isRequired,
+    Director: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+  }).isRequired,
+  onMovieClick: PropTypes.func.isRequired,
+};
