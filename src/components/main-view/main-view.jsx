@@ -8,9 +8,9 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    fetch("https://flexlink-11694b6f8913.herokuapp.com")
+    fetch("https://flexlink-11694b6f8913.herokuapp.com/movies")
       .then((response) => response.json())
-      .then((data) => {
+      .then((movies) => {
         const moviesFromApi = movies.map((movie) => {
           return {
             id: movie.key,
@@ -18,7 +18,7 @@ export const MainView = () => {
             Description: movie.Description,
             Genre: movie.Genre,
             Director: movie.Director,
-            /*             ImagePath: ``, */
+            ImagePath: movie.ImagePath,
           };
         });
 
