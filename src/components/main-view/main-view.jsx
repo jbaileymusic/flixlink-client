@@ -47,7 +47,10 @@ export const MainView = () => {
             setToken(token);
           }}
         />
-        or
+        <br />
+        or SIGNUP:
+        <br />
+        <br />
         <SignupView />
       </>
     );
