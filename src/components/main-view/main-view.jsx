@@ -3,6 +3,8 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { Row, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -38,7 +40,69 @@ export const MainView = () => {
       });
   }, [token]);
 
-  if (!user) {
+  return (
+    <Row className="justify-content-md-center">
+      {!user ? (
+        <>
+          <Col md={5}>
+            <LoginView
+              onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+              }}
+            />
+            <br />
+            <p className="fst-italic"> OR </p> <br />
+            <br />
+            <span style={{ fontWeight: "bold" }}>SIGNUP:</span>
+            <br />
+            <br />
+            <SignupView />
+          </Col>
+        </>
+      ) : selectedMovie ? (
+        <Col md={4}>
+          <MovieView
+            movie={selectedMovie}
+            onBackClick={() => setSelectedMovie(null)}
+          />
+        </Col>
+      ) : movies.length === 0 ? (
+        <div>There are no movies available here.</div>
+      ) : (
+        <>
+          {movies.map((movie) => (
+            <Col className="mb-5" key={movie.id} md={2}>
+              <MovieCard
+                movie={movie}
+                onMovieClick={(newSelectedMovie) => {
+                  setSelectedMovie(newSelectedMovie);
+                  <Button
+                    onClick={() => {
+                      setUser(null);
+                      setToken(null);
+                      localStorage.clear();
+                    }}
+                  >
+                    LOGOUT
+                  </Button>;
+                }}
+              />
+            </Col>
+          ))}
+        </>
+      )}
+    </Row>
+  );
+};
+/*     )
+  }
+
+
+    )
+      )}
+  ) */
+/* if (!user) {
     return (
       <>
         <LoginView
@@ -48,7 +112,9 @@ export const MainView = () => {
           }}
         />
         <br />
-        or SIGNUP:
+        <p className="fst-italic"> OR </p> <br />
+        <br />
+        <span style={{ fontWeight: "bold" }}>SIGNUP:</span>
         <br />
         <br />
         <SignupView />
@@ -91,4 +157,4 @@ export const MainView = () => {
       ))}
     </div>
   );
-};
+}; */
