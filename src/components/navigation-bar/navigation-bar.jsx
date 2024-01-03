@@ -1,8 +1,20 @@
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Form,
+  FormControl,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./navigation-bar.scss";
 
-export const MainNavbar = ({ user, onLoggedOut }) => {
+export const MainNavbar = ({
+  user,
+  onLoggedOut,
+  searchQuery,
+  onSearchInputChange,
+}) => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container className="justify-content-md.center">
@@ -51,6 +63,15 @@ export const MainNavbar = ({ user, onLoggedOut }) => {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
+        <Form className="d-flex">
+          <FormControl
+            type="text"
+            placeholder="Search Movies by Title"
+            className="mr-2"
+            value={searchQuery}
+            onChange={onSearchInputChange}
+          />
+        </Form>
       </Container>
     </Navbar>
   );

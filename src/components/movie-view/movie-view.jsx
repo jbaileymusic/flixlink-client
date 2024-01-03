@@ -13,20 +13,24 @@ export const MovieView = ({ user, token, movies }) => {
   //Updates the isFavorite state (true/false)
   useEffect(() => {
     if (user && movie) {
-      setIsFavorite(user.FavoriteMovies.includes(movie._id));
+      setIsFavorite(user.FavoriteMovies.includes(movie.id));
     }
   }, [user, movie, movieId]);
 
   // Function to handle toggling of favorite status
   const handleToggleFavorite = async () => {
     try {
-      // Check if necessary data (user, token, and movie) exists
+      console.log(123);
+      console.log(user);
+      console.log(token);
+      console.log(movie);
+      // Check for necessary data (user, token, and movie)
       if (!user || !token || !movie) {
         return;
       }
 
       // Define the URL for the API endpoint to handle adding/removing movies from favorites
-      const url = `https://flexlink-11694b6f8913.herokuapp.com/users/${user.Username}/movies/${movie._id}`;
+      const url = `https://flexlink-11694b6f8913.herokuapp.com/users/${user.Username}/movies/${movie.id}`;
 
       // Determine the HTTP method based on the current favorite status (isFavorite)
       const method = isFavorite ? "DELETE" : "POST";
@@ -106,14 +110,3 @@ export const MovieView = ({ user, token, movies }) => {
     </div>
   );
 };
-
-/* MovieView.propTypes = {
-  movie: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    Genre: PropTypes.string.isRequired,
-    Director: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired,
-  }).isRequired,
-};
- */

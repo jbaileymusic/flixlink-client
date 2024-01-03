@@ -14,6 +14,7 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(storedUser);
   const [token, setToken] = useState(storedToken);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchMovies = () =>
     fetch("https://flexlink-11694b6f8913.herokuapp.com/movies", {
@@ -35,6 +36,19 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
 
+  const filterMoviesBySearch = () => {
+    if (searchQuery.trim() === "") {
+      return movies;
+    }
+    return movies.filter((movie) =>
+      movie.Title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   useEffect(() => {
     if (!token) return;
     fetchMovies();
@@ -54,6 +68,8 @@ export const MainView = () => {
           setToken(null);
           localStorage.clear();
         }}
+        searchQuery={searchQuery}
+        onSearchInputChange={handleSearchInputChange}
       />
       <Row className="justify-content-md-center">
         <Routes>
@@ -107,7 +123,13 @@ export const MainView = () => {
                   </Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} />
+                    <MovieView
+                      movies={movies}
+                      user={user}
+                      token={token}
+                      setUser={setUser}
+                      setToken={setToken}
+                    />
                   </Col>
                 )}
               </>
@@ -150,7 +172,7 @@ export const MainView = () => {
                   </Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
+                    {filterMoviesBySearch().map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
                         <MovieCard movie={movie} />
                       </Col>
